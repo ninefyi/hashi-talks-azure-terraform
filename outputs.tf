@@ -1,13 +1,13 @@
 output "app_service_name" {
-  value = azurerm_app_service.main.name
+  value = azurerm_app_service.example.name
 }
 
 output "app_service_default_hostname" {
-  value = "https://${azurerm_app_service.main.default_site_hostname}"
+  value = "https://${azurerm_app_service.example.default_site_hostname}"
 }
 
-output "app_service_publish_profile" {
-  value = "https://${azurerm_app_service.main.publishing_profile}"
+output "app_service_site_credential" {
+  value = "https://${azurerm_app_service.example.site_credential}"
 }
 
 output "sql_user" {
