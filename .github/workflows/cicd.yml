@@ -1,0 +1,33 @@
+name: GitHub Actions Demo
+on:
+  push:
+    branches:
+      - webapp
+env:
+  AZURE_WEBAPP_NAME: "app-terraform-fyi"
+  AZURE_WEBAPP_PACKAGE_PATH: "."
+jobs:
+  Deploy-BlazorApp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: Setup .NET 6.0
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '6.0.x'
+          include-prerelease: true
+      - run: |
+          dotnet restore ./BlazorApp
+          dotnet build ./BlazorApp/BlazorApp.csproj -c Release
+          dotnet publish BlazorApp/BlazorApp.csproj -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish' -c Release
+      - uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }} # Replace with your app name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }} # Define secret variable in repository settings as per action documentation
+          package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/publish'
+      - name: Archive BlazorApp artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: publish
+          path: publish
