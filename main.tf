@@ -63,32 +63,32 @@ resource "azurerm_mssql_database" "example" {
 
 }
 
-# resource "azurerm_app_service_plan" "example" {
-#   name                = "plan-terraform-fyi"
-#   location            = azurerm_resource_group.example.location
-#   resource_group_name = azurerm_resource_group.example.name
-#   kind = linux
+resource "azurerm_app_service_plan" "example" {
+  name                = "plan-terraform-fyi"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
 
-#   sku {
-#     tier = "Standard"
-#     size = "S1"
-#   }
-# }
+  sku {
+    tier = "Standard"
+    size = "S1"
+  }
+}
 
-# resource "azurerm_app_service" "example" {
-#   name                = "app-terraform-fyi"
-#   location            = azurerm_resource_group.example.location
-#   resource_group_name = azurerm_resource_group.example.name
-#   app_service_plan_id = azurerm_app_service_plan.example.id
+resource "azurerm_app_service" "example" {
+  name                = "app-terraform-fyi"
+  location            = azurerm_resource_group.example.location
+  resource_group_name = azurerm_resource_group.example.name
+  app_service_plan_id = azurerm_app_service_plan.example.id
 
-#   site_config {
-#     dotnet_framework_version = "v6.0"
-#     scm_type                 = "LocalGit"
-#   }
+  site_config {
+    dotnet_framework_version = "v6.0"
+    scm_type                 = "LocalGit"
+    always_on                = true
+  }
 
-#   connection_string {
-#     name  = "Database"
-#     type  = "SQLServer"
-#     value = "Server=tcp:${azurerm_mssql_server.example.fully_qualified_domain_name};Database=${azurerm_mssql_database.example.name};User ID=${var.sql_user};Password=${var.sql_password};Trusted_Connection=False;Encrypt=True;"
-#   }
-# }
+  connection_string {
+    name  = "Database"
+    type  = "SQLServer"
+    value = "Server=tcp:${azurerm_mssql_server.example.fully_qualified_domain_name};Database=${azurerm_mssql_database.example.name};User ID=${var.sql_user};Password=${var.sql_password};Trusted_Connection=False;Encrypt=True;"
+  }
+}

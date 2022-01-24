@@ -6,5 +6,5 @@ HashiTalks 27-Jan-2022
 3. terraform validate
 4. terraform apply -auto-approve
 5. terraform destroy
-6. terraform plan -out=my_plan
-7. terraform apply my_plan
+6. terraform plan -out=my.plan
+7. terraform apply my.plan
