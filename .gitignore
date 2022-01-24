@@ -6,6 +6,9 @@
 # .tfstate files
 *.tfstate
 *.tfstate.*
+**/BlazorApp/**
+**/publish/**
+**/.vscode/**
 
 *.plan
 
