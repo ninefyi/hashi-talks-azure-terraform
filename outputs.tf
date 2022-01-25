@@ -7,7 +7,7 @@ output "app_service_default_hostname" {
 }
 
 output "app_service_site_credential" {
-  value = "https://${azurerm_app_service.example.site_credential}"
+  value = flatten(azurerm_app_service.example.site_credential)
 }
 
 output "sql_user" {
